@@ -49,6 +49,10 @@ export async function processBackgroundRemoval(buffer, requestedProvider = 'auto
     };
   } catch (error) {
     logger.error({ err: error, provider: activeProvider }, 'All background removal strategies failed');
-    throw new ProcessingError();
+    // If we already threw a structured ProcessingError inside the logic block, pass its custom message!
+    if (error instanceof ProcessingError) {
+      throw error;
+    }
+    throw new ProcessingError(error.message || undefined);
   }
 }

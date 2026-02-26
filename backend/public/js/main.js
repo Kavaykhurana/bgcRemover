@@ -37,6 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Set initial state
   setUIState('stateUpload');
+  
+  // Auto-load saved API key
+  const apiKeyInput = document.getElementById('apiKeyInput');
+  if (apiKeyInput && localStorage.getItem('removebgApiKey')) {
+    apiKeyInput.value = localStorage.getItem('removebgApiKey');
+  }
 
   const uploader = setupUploader((file, previewUrl) => {
     console.log('[BGC] File accepted:', file.name, file.size);
@@ -54,7 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const file = uploader.getCurrentFile();
     if (!file) return;
 
-    const apiKey = document.getElementById('apiKeyInput') ? document.getElementById('apiKeyInput').value.trim() : '';
+    const apiKey = apiKeyInput ? apiKeyInput.value.trim() : '';
+    if (apiKey) {
+      localStorage.setItem('removebgApiKey', apiKey);
+    } else {
+      localStorage.removeItem('removebgApiKey');
+    }
 
     // Process via API
     const response = await processImageWithAI(file, 'auto', apiKey);
