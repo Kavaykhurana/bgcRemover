@@ -54,8 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const file = uploader.getCurrentFile();
     if (!file) return;
 
+    const apiKey = document.getElementById('apiKeyInput') ? document.getElementById('apiKeyInput').value.trim() : '';
+
     // Process via API
-    const response = await processImageWithAI(file, 'auto');
+    const response = await processImageWithAI(file, 'auto', apiKey);
     
     if (response && response.success) {
       // Setup successful UI

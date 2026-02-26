@@ -6,7 +6,7 @@ export class APIError extends Error {
   }
 }
 
-export async function processImageWithAI(file, provider = 'auto') {
+export async function processImageWithAI(file, provider = 'auto', apiKey = '') {
   // Update state UI
   import('./main.js').then(module => module.setUIState('stateProcessing'));
 
@@ -14,6 +14,7 @@ export async function processImageWithAI(file, provider = 'auto') {
   formData.append('image', file);
   formData.append('provider', provider);
   formData.append('output_format', 'png');
+  if (apiKey) formData.append('api_key', apiKey);
 
   try {
       const response = await fetch('/api/remove-background', {

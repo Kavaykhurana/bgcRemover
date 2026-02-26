@@ -15,6 +15,7 @@ const router = express.Router();
 const UploadQuerySchema = z.object({
   provider: z.enum(['auto', 'local', 'removebg']).default('auto'),
   output_format: z.enum(['png', 'jpeg', 'webp']).default('png'),
+  api_key: z.string().optional(),
 });
 
 // 1. Initial layer: Multer locks down memory and prevents DOS payload stuffing
@@ -23,8 +24,8 @@ const upload = multer({
   limits: {
     fileSize: config.MAX_FILE_SIZE_BYTES, // 5MB limit
     files: 1, // Strictly only 1 file
-    fields: 4, // Max 4 text fields
-    parts: 6,  // Max 6 multi-parts
+    fields: 5, // Max 5 text fields (bumped from 4 to allow api_key)
+    parts: 7,  // Max 7 multi-parts
     headerPairs: 100 // Prevent header DOS
   },
 });
@@ -46,7 +47,7 @@ router.post(
         return res.status(400).json({ error: 'INVALID_PAYLOAD', message: 'Invalid payload parameters provided.' });
       }
 
-      const { provider: requestedProvider, output_format: requestedOutputFormat } = parseResult.data;
+      const { provider: requestedProvider, output_format: requestedOutputFormat, api_key: userApiKey } = parseResult.data;
       
       const { width, height } = req.fileMetadata || {}; // Inferred early from sharp in validation step
 
@@ -54,7 +55,7 @@ router.post(
       const cleanBuffer = await imageProcessor.preprocessImage(req.file.buffer);
 
       // 4. AI Processing Layer (Removes background)
-      const aiResult = await processBackgroundRemoval(cleanBuffer, requestedProvider);
+      const aiResult = await processBackgroundRemoval(cleanBuffer, requestedProvider, userApiKey);
 
       // 5. Postprocess Image (Optimization)
       const formattedBuffer = await imageProcessor.formatOutput(aiResult.buffer, requestedOutputFormat);
