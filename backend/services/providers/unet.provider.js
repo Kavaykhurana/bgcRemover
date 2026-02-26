@@ -1,14 +1,21 @@
-import * as ort from 'onnxruntime-node';
 import sharp from 'sharp';
 import path from 'path';
 import config from '../../config/index.js';
 import logger from '../../utils/logger.js';
 
 let session = null;
+let ort = null;
 const MODEL_SIZE = 320; // 320x320 input size
 
 export async function initialize() {
   if (session) return;
+  try {
+    ort = await import('onnxruntime-node');
+  } catch (err) {
+    logger.warn('onnxruntime-node not found. Local AI provider will be unavailable.');
+    throw err;
+  }
+
   try {
     const modelPath = path.join(config.MODELS_DIR, 'u2net.onnx');
     // Using CPU execution provider. You could add 'cuda' if GPU is available.

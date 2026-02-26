@@ -9,6 +9,11 @@
       }
     }
   ],
+  "functions": {
+    "backend/server.js": {
+      "excludeFiles": "backend/node_modules/onnxruntime-node/**"
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",
