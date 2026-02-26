@@ -2,7 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import https from 'https';
 import { fileURLToPath } from 'url';
-import logger from '../utils/logger.js';
+const logger = {
+  info: (...args) => console.log('[INFO]', ...args),
+  error: (...args) => console.error('[ERROR]', ...args),
+};
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

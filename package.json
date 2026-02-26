@@ -6,6 +6,7 @@
     "start": "npm start --prefix backend",
     "dev": "npm run dev --prefix backend",
     "install-all": "npm install --prefix backend",
-    "build": "node backend/scripts/download-model.js"
+    "build": "npm install --prefix backend && node backend/scripts/download-model.js",
+    "postinstall": "npm install --prefix backend"
   }
 }
