@@ -1,7 +1,7 @@
 {
   "version": 2,
   "functions": {
-    "backend/server.js": {
+    "api/**/*.js": {
       "includeFiles": "backend/public/**",
       "excludeFiles": "backend/node_modules/onnxruntime-node/**"
     }
@@ -9,7 +9,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/backend/server.js"
+      "destination": "/api/index.js"
     }
   ]
 }
