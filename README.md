@@ -24,46 +24,38 @@ Every decision has been made with scalability, security, clean UX, and strict co
 
 ### 1. Clone and install
 
-\`\`\`bash
+```bash
 git clone <repo>
-cd <repo>/backend && npm install
-cd ../frontend # no install needed
-\`\`\`
+cd <repo>
+npm run install-all  # Installs backend dependencies
+```
 
 ### 2. Download AI model
 
-\`\`\`bash
-cd backend && node scripts/download-model.js
-
-# Downloads u2net.onnx (~170MB) to ./models/
-
-\`\`\`
+```bash
+npm run build        # Downloads u2net.onnx (~170MB) to ./backend/models/
+```
 
 ### 3. Configure environment
 
-\`\`\`bash
+```bash
 cd backend
 cp .env.example .env
-
 # Edit .env — add REMOVEBG_API_KEY if using remote provider, or use AI_PROVIDER=local
-
-\`\`\`
+```
 
 ### 4. Run development
 
-\`\`\`bash
-cd backend
-npm run dev # starts backend on :3000
-
-# Open frontend/index.html in browser or serve with: npx serve frontend
-
-\`\`\`
+```bash
+npm run dev          # Starts backend on :3000
+# Open http://localhost:3000 in your browser
+```
 
 ### 5. Run with Docker
 
-\`\`\`bash
+```bash
 docker-compose up --build
-\`\`\`
+```
 
 ## Architecture Design Principles
 

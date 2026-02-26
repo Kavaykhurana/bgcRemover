@@ -1,0 +1,11 @@
+{
+  "name": "bgcremover-root",
+  "version": "1.0.0",
+  "description": "AI Background Remover",
+  "scripts": {
+    "start": "npm start --prefix backend",
+    "dev": "npm run dev --prefix backend",
+    "install-all": "npm install --prefix backend",
+    "build": "node backend/scripts/download-model.js"
+  }
+}

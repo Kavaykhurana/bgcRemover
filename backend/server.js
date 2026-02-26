@@ -81,11 +81,15 @@ app.use('/api', rateLimit()); // Apply strict API rate limits
 app.use('/api/remove-background', uploadRoute);
 
 // Serve frontend static files
-const frontendPath = path.join(__dirname, '..', 'frontend');
+const frontendPath = path.join(__dirname, 'public');
 app.use(express.static(frontendPath));
 
-// SPA fallback — serve index.html for non-API routes
-app.get('/{*splat}', (req, res) => {
+// SPA fallback — serve index.html for all other non-API routes
+app.get('*', (req, res, next) => {
+  // Only serve index.html for non-API routes to avoid recursive 404 loops or masking API 404s
+  if (req.path.startsWith('/api') || req.path.startsWith('/health')) {
+    return next();
+  }
   res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
