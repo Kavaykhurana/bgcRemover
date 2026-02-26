@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "outputDirectory": "backend/public",
   "functions": {
     "api/**/*.js": {
       "includeFiles": "backend/public/**",
