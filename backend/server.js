@@ -96,18 +96,21 @@ app.get('*', (req, res, next) => {
 // Centralized Error Handling
 app.use(errorHandler);
 
-// Start Server
-const server = app.listen(config.PORT, async () => {
-  logger.info(`Server running in ${config.NODE_ENV} mode on port ${config.PORT}`);
-  
-  if (config.AI_PROVIDER === 'local' || config.AI_PROVIDER === 'auto') {
-    try {
-      await initLocalU2Net();
-    } catch (err) {
-      logger.warn('Failed to pre-warm local model during startup. Will try on first request.');
+// Start Server (Avoid listening physically on Vercel/Serverless where process.env.VERCEL is set)
+let server;
+if (!process.env.VERCEL) {
+  server = app.listen(config.PORT, async () => {
+    logger.info(`Server running in ${config.NODE_ENV} mode on port ${config.PORT}`);
+    
+    if (config.AI_PROVIDER === 'local' || config.AI_PROVIDER === 'auto') {
+      try {
+        await initLocalU2Net();
+      } catch (err) {
+        logger.warn('Failed to pre-warm local model during startup. Will try on first request.');
+      }
     }
-  }
-});
+  });
+}
 
 // Graceful shutdown handling
 const shutdown = () => {

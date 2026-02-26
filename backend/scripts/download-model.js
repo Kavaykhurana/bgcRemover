@@ -16,6 +16,11 @@ const MODEL_PATH = path.join(MODELS_DIR, 'u2net.onnx');
 const MODEL_URL = 'https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net.onnx';
 
 async function downloadModel() {
+  if (process.env.VERCEL) {
+    logger.info('⚠️ Skipping local ONNX model download on Vercel to avoid hitting the 50MB/250MB serverless function limits. The app will rely on the remote API provider.');
+    return;
+  }
+
   if (!fs.existsSync(MODELS_DIR)) {
     fs.mkdirSync(MODELS_DIR, { recursive: true });
   }
