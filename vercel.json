@@ -2,7 +2,7 @@
   "version": 2,
   "outputDirectory": "backend/public",
   "functions": {
-    "api/**/*.js": {
+    "api/**/*.mjs": {
       "includeFiles": "backend/public/**",
       "excludeFiles": "backend/node_modules/onnxruntime-node/**"
     }
@@ -10,7 +10,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/api/index.js"
+      "destination": "/api/index.mjs"
     }
   ]
 }
