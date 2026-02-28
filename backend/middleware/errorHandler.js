@@ -2,7 +2,7 @@ import logger from '../utils/logger.js';
 import { AppError } from '../utils/errors.js';
 
 const errorHandler = (err, req, res, next) => {
-  if (err instanceof AppError) {
+  if (err instanceof AppError || err.isOperational) {
     logger.warn({ err, userId: req.user?.id || 'anonymous' }, err.message);
     const response = {
       error: err.errorCode,
