@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   PORT: z.string().transform((val) => parseInt(val, 10)).default('3000'),
-  ALLOWED_ORIGINS: z.string().default('http://localhost:3000'),
+  ALLOWED_ORIGINS: z.string().default('*'),
   
   // AI Providers
   AI_PROVIDER: z.enum(['auto', 'local', 'removebg']).default('auto'),

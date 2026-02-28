@@ -148,21 +148,33 @@
                 "
                 >Remove.bg API Key (Required on Vercel)</label
               >
-              <input
-                type="password"
-                id="apiKeyInput"
-                placeholder="Paste your API key here..."
-                style="
-                  padding: 0.5rem 1rem;
-                  border-radius: var(--radius-md);
-                  border: 1px solid var(--border);
-                  background: var(--surface);
-                  color: var(--text-primary);
-                  width: 100%;
-                  max-width: 320px;
-                  font-family: var(--font-primary);
-                "
-              />
+              <div style="display: flex; flex-direction: column; width: 100%; max-width: 320px; align-items: flex-end; position: relative">
+                <input
+                  type="password"
+                  id="apiKeyInput"
+                  placeholder="Paste your API key here..."
+                  style="
+                    padding: 0.5rem 1rem;
+                    border-radius: var(--radius-md);
+                    border: 1px solid var(--border);
+                    background: var(--surface);
+                    color: var(--text-primary);
+                    width: 100%;
+                    font-family: var(--font-primary);
+                  "
+                />
+                <span id="apiKeySavedIndicator" style="
+                  display: none;
+                  position: absolute;
+                  right: 10px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  font-size: 0.75rem;
+                  color: var(--primary);
+                  font-weight: 600;
+                  pointer-events: none;
+                ">Saved!</span>
+              </div>
               <p
                 style="
                   font-size: 0.75rem;

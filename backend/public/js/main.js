@@ -38,10 +38,31 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set initial state
   setUIState('stateUpload');
   
-  // Auto-load saved API key
+  // Auto-load and auto-save API key
   const apiKeyInput = document.getElementById('apiKeyInput');
-  if (apiKeyInput && localStorage.getItem('removebgApiKey')) {
-    apiKeyInput.value = localStorage.getItem('removebgApiKey');
+  const savedIndicator = document.getElementById('apiKeySavedIndicator');
+  let saveTimeout;
+  if (apiKeyInput) {
+    if (localStorage.getItem('removebgApiKey')) {
+      apiKeyInput.value = localStorage.getItem('removebgApiKey');
+    }
+    // Save as soon as user types, solving the "how do I save this" issue before they process an image
+    apiKeyInput.addEventListener('input', (e) => {
+      const val = e.target.value.trim();
+      if (val) {
+        localStorage.setItem('removebgApiKey', val);
+        if (savedIndicator) {
+          savedIndicator.style.display = 'block';
+          clearTimeout(saveTimeout);
+          saveTimeout = setTimeout(() => {
+            savedIndicator.style.display = 'none';
+          }, 1500);
+        }
+      } else {
+        localStorage.removeItem('removebgApiKey');
+        if (savedIndicator) savedIndicator.style.display = 'none';
+      }
+    });
   }
 
   const uploader = setupUploader((file, previewUrl) => {
