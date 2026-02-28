@@ -11,10 +11,10 @@ export async function processImageWithAI(file, provider = 'auto', apiKey = '') {
   import('./main.js').then(module => module.setUIState('stateProcessing'));
 
   const formData = new FormData();
-  formData.append('image', file);
   formData.append('provider', provider);
   formData.append('output_format', 'png');
   if (apiKey) formData.append('api_key', apiKey);
+  formData.append('image', file);
 
   try {
       const response = await fetch('/api/remove-background', {
