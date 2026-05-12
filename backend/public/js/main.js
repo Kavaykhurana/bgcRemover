@@ -89,7 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Process via API
-    const response = await processImageRemoval(file, 'auto', apiKey);
+    const provider = apiKey ? 'removebg' : 'auto';
+    const response = await processImageRemoval(file, provider, apiKey);
     
     if (response && response.success) {
       // Setup successful UI

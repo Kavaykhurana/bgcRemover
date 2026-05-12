@@ -7,10 +7,15 @@ import logger from '../utils/logger.js';
 export async function processBackgroundRemoval(buffer, requestedProvider = 'auto', userApiKey = null) {
   let activeProvider = requestedProvider;
 
-  // Inherit default configuration if provider not explicitly requested in REST API
   if (!['auto', 'local', 'removebg'].includes(activeProvider)) {
     activeProvider = config.REMOVAL_PROVIDER;
   }
+
+  if (process.env.VERCEL && activeProvider === 'auto') {
+    activeProvider = 'removebg';
+  }
+
+  const remoteKeyAvailable = Boolean(userApiKey || config.REMOVEBG_API_KEY);
 
   const startTime = performance.now();
   let resultBuffer = null;
@@ -23,17 +28,17 @@ export async function processBackgroundRemoval(buffer, requestedProvider = 'auto
     } else if (activeProvider === 'removebg') {
       resultBuffer = await removebgProvider.removeBackground(buffer, userApiKey);
       modelUsed = 'removebg-api';
-    } else { // 'auto'
+    } else {
       try {
         resultBuffer = await unetProvider.removeBackground(buffer);
         modelUsed = 'unet-onnx';
       } catch (localError) {
         logger.warn({ err: localError }, 'Local provider failed, falling back to remote');
-        if (config.REMOVEBG_API_KEY || userApiKey) {
+        if (remoteKeyAvailable) {
           resultBuffer = await removebgProvider.removeBackground(buffer, userApiKey);
           modelUsed = 'removebg-api';
         } else {
-          throw new ProcessingError('Local provider failed and remote provider is not configured.');
+          throw new ProcessingError('Local background removal is unavailable. Add a remove.bg API key and try again.');
         }
       }
     }
@@ -48,11 +53,11 @@ export async function processBackgroundRemoval(buffer, requestedProvider = 'auto
       }
     };
   } catch (error) {
-    logger.error({ err: error, provider: activeProvider }, 'All background removal strategies failed');
-    // If we already threw a structured ProcessingError inside the logic block, pass its custom message!
     if (error instanceof ProcessingError || error.isOperational) {
+      logger.warn({ err: error, provider: activeProvider }, error.message);
       throw error;
     }
+    logger.error({ err: error, provider: activeProvider }, 'All background removal strategies failed');
     throw new ProcessingError(error.message || undefined);
   }
 }

@@ -29,14 +29,6 @@ const envSchema = z.object({
 
   // Logging
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
-}).refine(data => {
-  if ((data.REMOVAL_PROVIDER === 'removebg' || data.REMOVAL_PROVIDER === 'auto') && !data.REMOVEBG_API_KEY) {
-    if (data.REMOVAL_PROVIDER === 'removebg') return false;
-  }
-  return true;
-}, {
-  message: "REMOVEBG_API_KEY is required if REMOVAL_PROVIDER is 'removebg'",
-  path: ["REMOVEBG_API_KEY"],
 });
 
 let config;

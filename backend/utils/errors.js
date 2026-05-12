@@ -15,6 +15,12 @@ export class ValidationError extends AppError {
   }
 }
 
+export class MissingApiKeyError extends AppError {
+  constructor(message = 'A remove.bg API key is required for this deployment.') {
+    super(message, 400, 'MISSING_API_KEY');
+  }
+}
+
 export class FileTooLargeError extends AppError {
   constructor(message = 'Maximum file size is 5MB.') {
     super(message, 413, 'FILE_TOO_LARGE');

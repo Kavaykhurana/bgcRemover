@@ -30,6 +30,9 @@ export async function processImageRemoval(file, provider = 'auto', apiKey = '') 
               const errorData = await response.json();
               errorMessage = errorData.message || errorMessage;
               retryAfter = errorData.retry_after;
+              if (errorData.error === 'MISSING_API_KEY') {
+                  errorMessage = 'Add a remove.bg API key, then try again.';
+              }
           } catch(e) { /* non-json response */ }
           
           throw new APIError(errorMessage, response.status, retryAfter);
