@@ -11,22 +11,20 @@ import logger from '../utils/logger.js';
 
 const router = express.Router();
 
-// Input Validation Schema (Zod) - Prevents NoSQL/Command injection and prototype pollution
 const UploadQuerySchema = z.object({
   provider: z.enum(['auto', 'local', 'removebg']).default('auto'),
   output_format: z.enum(['png', 'jpeg', 'webp']).default('png'),
   api_key: z.string().optional(),
 });
 
-// 1. Initial layer: Multer locks down memory and prevents DOS payload stuffing
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
-    fileSize: config.MAX_FILE_SIZE_BYTES, // 5MB limit
-    files: 1, // Strictly only 1 file
-    fields: 5, // Max 5 text fields (bumped from 4 to allow api_key)
-    parts: 7,  // Max 7 multi-parts
-    headerPairs: 100 // Prevent header DOS
+    fileSize: config.MAX_FILE_SIZE_BYTES,
+    files: 1,
+    fields: 5,
+    parts: 7,
+    headerPairs: 100
   },
 });
 
@@ -40,7 +38,6 @@ router.post(
         return res.status(400).json({ error: 'MISSING_FILE', message: 'No image uploaded.' });
       }
 
-      // 2.5 Security: Strict Query Validation (Stripping malicious payloads)
       const parseResult = UploadQuerySchema.safeParse(req.body);
       if (!parseResult.success) {
         logger.warn({ ip: req.ip, issues: parseResult.error.issues }, 'Payload validation failed');
@@ -51,19 +48,14 @@ router.post(
       
       const { width, height } = req.fileMetadata || {}; // Inferred early from sharp in validation step
 
-      // 3. Preprocess Image (orient, strip EXIF)
       const cleanBuffer = await imageProcessor.preprocessImage(req.file.buffer);
 
-      // 4. AI Processing Layer (Removes background)
       const aiResult = await processBackgroundRemoval(cleanBuffer, requestedProvider, userApiKey);
 
-      // 5. Postprocess Image (Optimization)
       const formattedBuffer = await imageProcessor.formatOutput(aiResult.buffer, requestedOutputFormat);
 
-      // 6. Save to disk temporarily (To stream it cleanly and avoid large response buffering in V8 memory)
       const tempPath = await tempStorage.saveBuffer(formattedBuffer, 'bgc-result');
 
-      // 7. Stream response
       res.set({
         'Content-Type': `image/${requestedOutputFormat}`,
         'X-Processing-Time-Ms': aiResult.metadata.processingTimeMs.toString(),

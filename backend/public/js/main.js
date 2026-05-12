@@ -1,6 +1,6 @@
 import { initTheme } from './theme.js';
 import { setupUploader } from './uploader.js';
-import { processImageWithAI } from './processor.js';
+import { processImageRemoval } from './processor.js';
 import { initComparisonSlider } from './comparison.js';
 import { initBackgroundControls } from './background.js';
 import { generateFileName } from './utils.js';
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Process via API
-    const response = await processImageWithAI(file, 'auto', apiKey);
+    const response = await processImageRemoval(file, 'auto', apiKey);
     
     if (response && response.success) {
       // Setup successful UI

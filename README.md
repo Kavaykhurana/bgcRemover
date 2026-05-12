@@ -1,17 +1,19 @@
-# Production-Grade AI Background Remover
+# BGC Remover
 
-This is a production-ready, portfolio-defining background removal web application.
-It uses a robust architecture to manage AI background removal, with a swappable interface supporting both a local ONNX Runtime inference engine using U²-Net AND a remote fallback to the `remove.bg` REST API.
+BGC Remover is a web app for removing image backgrounds and downloading the result as a PNG.
+The backend can run a local ONNX segmentation model and can also call the `remove.bg` API when a remote provider is configured.
 
-Every decision has been made with scalability, security, clean UX, and strict code quality in mind. There are no frontend frameworks used (Vanilla JS) and the backend is built cleanly using Node.js and Express 5.
+The frontend is written with HTML, CSS, and vanilla JavaScript. The backend uses Node.js, Express, Sharp, and ONNX Runtime.
 
 ## Features
 
-- **Local Inference:** Runs an ONNX Runtime node session using the U²-Net model. No external APIs needed.
-- **Remote Integration:** Fallback to the `remove.bg` API wrapper via `axios` and `form-data`.
-- **Zero Framework UI:** Entirely built with modern Vanilla JS and robust Design Tokens.
-- **Advanced State Engine:** Micro-animations for uploads, before/after pure CSS comparison slider.
-- **Enhanced Security & Logging:** Uses Pino for structured logging and strictly validates files using image magic bytes and Sharp decoding.
+- Local background removal with an ONNX model.
+- Optional remote processing through remove.bg.
+- Drag-and-drop, paste, and file-picker upload support.
+- Before/after comparison slider.
+- Output background preview controls and PNG download.
+- File validation with size limits, magic-byte checks, and Sharp decoding.
+- Structured server logging and rate limiting.
 
 ---
 
@@ -30,7 +32,7 @@ cd <repo>
 npm run install-all  # Installs backend dependencies
 ```
 
-### 2. Download AI model
+### 2. Download the model
 
 ```bash
 npm run build        # Downloads u2net.onnx (~170MB) to ./backend/models/
@@ -41,7 +43,7 @@ npm run build        # Downloads u2net.onnx (~170MB) to ./backend/models/
 ```bash
 cd backend
 cp .env.example .env
-# Edit .env — add REMOVEBG_API_KEY if using remote provider, or use AI_PROVIDER=local
+# Edit .env if you want to change the provider or add a remove.bg key
 ```
 
 ### 4. Run development
@@ -57,8 +59,12 @@ npm run dev          # Starts backend on :3000
 docker-compose up --build
 ```
 
-## Architecture Design Principles
+## Architecture
 
-1. **Provider Strategy Pattern for AI layer:** Background removal models are decoupled. We provide both U-Net (local) and Remove.bg (remote) under the `services/providers/` folder, easily allowing drop-in replacements.
-2. **Strict File Validation:** Uploaded files bypass generic checks (Multer headers) by matching specific magic number bytes before executing logic via Sharp. Max file size is natively enforced in standard multipart data pipes.
-3. **Optimized Streams:** The API response yields an ephemeral binary buffer returned straight from memory/temp storage securely, keeping runtime V8 heap footprint small.
+The application keeps the UI, upload handling, image processing, and provider logic separated:
+
+- `backend/public/` contains the static frontend.
+- `backend/routes/` contains the HTTP routes.
+- `backend/middleware/` contains upload validation, rate limiting, and error handling.
+- `backend/services/providers/` contains the local and remote background-removal providers.
+- `backend/services/imageProcessor.js` handles image preprocessing and output formatting.

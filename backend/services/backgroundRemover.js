@@ -9,7 +9,7 @@ export async function processBackgroundRemoval(buffer, requestedProvider = 'auto
 
   // Inherit default configuration if provider not explicitly requested in REST API
   if (!['auto', 'local', 'removebg'].includes(activeProvider)) {
-    activeProvider = config.AI_PROVIDER;
+    activeProvider = config.REMOVAL_PROVIDER;
   }
 
   const startTime = performance.now();

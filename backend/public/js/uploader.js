@@ -13,7 +13,6 @@ export function setupUploader(onFileAccepted) {
   function validateFile(file) {
     if (!file) return false;
     
-    // Check type client-side before sending
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
       alert('Invalid file format. Only JPG, PNG, and WebP are supported.');
       return false;
@@ -32,13 +31,11 @@ export function setupUploader(onFileAccepted) {
     
     currentFile = file;
     
-    // Update Preview UI
     const objectUrl = URL.createObjectURL(file);
     previewImage.src = objectUrl;
     fileName.textContent = file.name;
     fileSize.textContent = formatBytes(file.size);
     
-    // Notify main controller
     onFileAccepted(file, objectUrl);
   }
 
@@ -56,7 +53,7 @@ export function setupUploader(onFileAccepted) {
   // Drag & Drop
   ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
     uploadZone.addEventListener(eventName, preventDefaults, false);
-    document.body.addEventListener(eventName, preventDefaults, false); // Prevent drop outside to stop browser nav
+    document.body.addEventListener(eventName, preventDefaults, false);
   });
 
   function preventDefaults(e) {
@@ -87,13 +84,12 @@ export function setupUploader(onFileAccepted) {
 
   // Paste Support
   window.addEventListener('paste', (e) => {
-    // If we're not inside upload zone, ignore paste? We can allow it anywhere but upload
     const items = (e.clipboardData || e.originalEvent.clipboardData).items;
     for (const item of items) {
       if (item.kind === 'file' && item.type.startsWith('image/')) {
         const file = item.getAsFile();
         handleFile(file);
-        break; // take first image only
+        break;
       }
     }
   });

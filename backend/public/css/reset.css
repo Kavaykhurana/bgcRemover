@@ -12,12 +12,40 @@ html {
 }
 
 body {
+  position: relative;
+  isolation: isolate;
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   background-color: var(--bg-color);
   color: var(--text-primary);
   overflow-x: hidden;
   transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+body::before {
+  z-index: -2;
+  background: radial-gradient(
+    100% 100% at 50% 0%,
+    rgba(45, 46, 131, 0.4) 0%,
+    rgb(15, 22, 41) 50%
+  );
+}
+
+body::after {
+  z-index: -1;
+  background-image:
+    linear-gradient(30deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(-30deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 200px 200px;
+  opacity: 0.15;
 }
 
 img, picture, svg, video {

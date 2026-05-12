@@ -102,7 +102,7 @@ if (!process.env.VERCEL) {
   server = app.listen(config.PORT, async () => {
     logger.info(`Server running in ${config.NODE_ENV} mode on port ${config.PORT}`);
     
-    if (config.AI_PROVIDER === 'local' || config.AI_PROVIDER === 'auto') {
+    if (config.REMOVAL_PROVIDER === 'local' || config.REMOVAL_PROVIDER === 'auto') {
       try {
         await initLocalU2Net();
       } catch (err) {

@@ -5,7 +5,7 @@ services:
     ports: ["3000:3000"]
     environment:
       - NODE_ENV=production
-      - AI_PROVIDER=auto
+      - REMOVAL_PROVIDER=auto
       - REMOVEBG_API_KEY=${REMOVEBG_API_KEY}
       - RATE_LIMIT_WINDOW_MS=60000
       - RATE_LIMIT_MAX_REQUESTS=10

@@ -1,7 +1,7 @@
 {
   "name": "bgcremover-root",
   "version": "1.0.0",
-  "description": "AI Background Remover",
+  "description": "Background removal web app",
   "scripts": {
     "start": "npm start --prefix backend",
     "dev": "npm run dev --prefix backend",

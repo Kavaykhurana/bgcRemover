@@ -6,7 +6,7 @@ export class APIError extends Error {
   }
 }
 
-export async function processImageWithAI(file, provider = 'auto', apiKey = '') {
+export async function processImageRemoval(file, provider = 'auto', apiKey = '') {
   // Update state UI
   import('./main.js').then(module => module.setUIState('stateProcessing'));
 

@@ -17,7 +17,7 @@ const MODEL_URL = 'https://github.com/danielgatis/rembg/releases/download/v0.0.0
 
 async function downloadModel() {
   if (process.env.VERCEL) {
-    logger.info('⚠️ Skipping local ONNX model download on Vercel to avoid hitting the 50MB/250MB serverless function limits. The app will rely on the remote API provider.');
+    logger.info('Skipping local ONNX model download on Vercel.');
     return;
   }
 
@@ -26,11 +26,11 @@ async function downloadModel() {
   }
 
   if (fs.existsSync(MODEL_PATH)) {
-    logger.info('✅ Model already exists, skipping download.');
+    logger.info('Model already exists, skipping download.');
     return;
   }
 
-  logger.info(`⬇️ Downloading U2-Net model (~170MB) from ${MODEL_URL}`);
+  logger.info(`Downloading U2-Net model (~170MB) from ${MODEL_URL}`);
   
   const file = fs.createWriteStream(MODEL_PATH);
 
@@ -76,9 +76,9 @@ async function downloadModel() {
 
   try {
      await download(MODEL_URL);
-     logger.info('✅ Model downloaded completely.');
+     logger.info('Model downloaded completely.');
   } catch (e) {
-     logger.error({ err: e }, "❌ Failed to download model.");
+     logger.error({ err: e }, "Failed to download model.");
      process.exit(1);
   }
 }

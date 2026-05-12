@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,8 +14,7 @@ const envSchema = z.object({
   PORT: z.string().transform((val) => parseInt(val, 10)).default('3000'),
   ALLOWED_ORIGINS: z.string().default('*'),
   
-  // AI Providers
-  AI_PROVIDER: z.enum(['auto', 'local', 'removebg']).default('auto'),
+  REMOVAL_PROVIDER: z.enum(['auto', 'local', 'removebg']).default('auto'),
   REMOVEBG_API_KEY: z.string().optional(),
 
   // File Handling
@@ -31,13 +30,12 @@ const envSchema = z.object({
   // Logging
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
 }).refine(data => {
-  if ((data.AI_PROVIDER === 'removebg' || data.AI_PROVIDER === 'auto') && !data.REMOVEBG_API_KEY) {
-    if (data.AI_PROVIDER === 'removebg') return false; // Fail validation if strict requirement
-    // In 'auto' mode, it will fallback to local if key is missing. We log a warning elsewhere.
+  if ((data.REMOVAL_PROVIDER === 'removebg' || data.REMOVAL_PROVIDER === 'auto') && !data.REMOVEBG_API_KEY) {
+    if (data.REMOVAL_PROVIDER === 'removebg') return false;
   }
   return true;
 }, {
-  message: "REMOVEBG_API_KEY is required if AI_PROVIDER is 'removebg'",
+  message: "REMOVEBG_API_KEY is required if REMOVAL_PROVIDER is 'removebg'",
   path: ["REMOVEBG_API_KEY"],
 });
 

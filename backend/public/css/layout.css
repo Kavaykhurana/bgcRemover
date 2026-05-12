@@ -1,4 +1,6 @@
 .app-container {
+  position: relative;
+  z-index: var(--z-base);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -8,12 +10,20 @@
 }
 
 .header {
+  position: sticky;
+  top: var(--space-4);
+  z-index: var(--z-above);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: var(--space-6);
-  border-bottom: 1px solid var(--border-color);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-xl);
+  background: rgba(10, 15, 29, 0.74);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   margin-bottom: var(--space-8);
+  box-shadow: 0 12px 36px rgb(0 0 0 / 0.24);
 }
 
 .logo-container {
@@ -48,8 +58,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
+  padding: var(--space-6) 0 var(--space-8);
 }
 
 .workspace {

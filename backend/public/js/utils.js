@@ -11,15 +11,11 @@ export function formatBytes(bytes) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
-/**
- * Creates a unique auto-generated filename
- */
 export function generateFileName(originalName) {
   const timestamp = Date.now();
   const ext = originalName.substring(originalName.lastIndexOf('.')) || '.png';
   const base = originalName.substring(0, originalName.lastIndexOf('.')) || 'image';
   
-  // Clean special characters from base
   const cleanBase = base.replace(/[^a-zA-Z0-9]/g, '-').slice(0, 20);
   
   return `${cleanBase}-bg-removed-${timestamp}${ext}`;
