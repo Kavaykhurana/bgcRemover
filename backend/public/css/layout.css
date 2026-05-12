@@ -17,13 +17,13 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--space-4) var(--space-5);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--header-border);
   border-radius: var(--radius-xl);
-  background: rgba(10, 15, 29, 0.74);
+  background: var(--header-bg);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   margin-bottom: var(--space-8);
-  box-shadow: 0 12px 36px rgb(0 0 0 / 0.24);
+  box-shadow: var(--header-shadow);
 }
 
 .logo-container {

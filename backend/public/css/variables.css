@@ -6,6 +6,7 @@
   --surface: rgba(255, 255, 255, 0.1);
   --text-primary: #ffffff;
   --text-secondary: #aab3c7;
+  --text-tertiary: #cbd5e1;
   --text-inverse: #ffffff;
 
   --primary: #4f46e5;
@@ -23,6 +24,27 @@
   /* Checkerboard for transparent backgrounds */
   --checker-color-1: rgba(255, 255, 255, 0.22);
   --checker-color-2: rgba(255, 255, 255, 0.06);
+
+  /* Theme surfaces */
+  --page-gradient-start: rgba(45, 46, 131, 0.4);
+  --page-gradient-end: rgb(15, 22, 41);
+  --page-grid-line: rgba(255, 255, 255, 0.015);
+  --page-grid-opacity: 0.15;
+  --header-bg: rgba(10, 15, 29, 0.74);
+  --header-border: rgba(255, 255, 255, 0.12);
+  --header-shadow: 0 12px 36px rgb(0 0 0 / 0.24);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-hover: rgba(255, 255, 255, 0.14);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --panel-fill: rgba(10, 15, 29, 0.55);
+  --outline-hover: rgba(255, 255, 255, 0.12);
+  --outline-border-hover: rgba(255, 255, 255, 0.38);
+  --upload-shadow:
+    0 8px 32px rgb(0 0 0 / 0.37),
+    inset 0 0 20px rgb(255 255 255 / 0.05),
+    0 0 0 1px rgb(255 255 255 / 0.04),
+    0 0 20px rgb(79 70 229 / 0.38),
+    0 0 8px rgb(79 209 197 / 0.32);
 
   /* Typography */
   --font-sans:

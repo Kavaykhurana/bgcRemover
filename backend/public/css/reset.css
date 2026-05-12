@@ -34,18 +34,18 @@ body::before {
   z-index: -2;
   background: radial-gradient(
     100% 100% at 50% 0%,
-    rgba(45, 46, 131, 0.4) 0%,
-    rgb(15, 22, 41) 50%
+    var(--page-gradient-start) 0%,
+    var(--page-gradient-end) 50%
   );
 }
 
 body::after {
   z-index: -1;
   background-image:
-    linear-gradient(30deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(-30deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    linear-gradient(30deg, var(--page-grid-line) 1px, transparent 1px),
+    linear-gradient(-30deg, var(--page-grid-line) 1px, transparent 1px);
   background-size: 200px 200px;
-  opacity: 0.15;
+  opacity: var(--page-grid-opacity);
 }
 
 img, picture, svg, video {

@@ -1,29 +1,51 @@
-[data-theme="dark"] {
-  --bg-color: #0f1629;
-  --bg-surface: rgba(255, 255, 255, 0.1);
-  --bg-surface-hover: rgba(255, 255, 255, 0.14);
-  --surface: rgba(255, 255, 255, 0.1);
-  --text-primary: #ffffff;
-  --text-secondary: #aab3c7;
+[data-theme="light"] {
+  --bg-color: #eef4ff;
+  --bg-surface: rgba(255, 255, 255, 0.72);
+  --bg-surface-hover: rgba(255, 255, 255, 0.86);
+  --surface: rgba(255, 255, 255, 0.76);
+  --text-primary: #101827;
+  --text-secondary: #536176;
+  --text-tertiary: #66758c;
   --text-inverse: #ffffff;
-  
-  --border-color: rgba(255, 255, 255, 0.2);
-  --border: rgba(255, 255, 255, 0.2);
-  --border-focus: #4fd1c5;
-  
-  --primary: #4f46e5;
-  --primary-hover: #3a3bbd;
-  
-  --checker-color-1: rgba(255, 255, 255, 0.22);
-  --checker-color-2: rgba(255, 255, 255, 0.06);
-  
+
+  --primary: #3f46d6;
+  --primary-hover: #2d2e83;
+  --primary-rgb: 63, 70, 214;
+
+  --border-color: rgba(63, 70, 214, 0.18);
+  --border: rgba(63, 70, 214, 0.2);
+  --border-focus: #4f46e5;
+
+  --checker-color-1: #dbe4f3;
+  --checker-color-2: #f8fbff;
+
+  --page-gradient-start: rgba(79, 70, 229, 0.22);
+  --page-gradient-end: rgb(238, 244, 255);
+  --page-grid-line: rgba(15, 23, 42, 0.05);
+  --page-grid-opacity: 0.45;
+  --header-bg: rgba(255, 255, 255, 0.72);
+  --header-border: rgba(63, 70, 214, 0.14);
+  --header-shadow: 0 14px 36px rgb(59 78 120 / 0.12);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-hover: rgba(255, 255, 255, 0.86);
+  --glass-border: rgba(63, 70, 214, 0.18);
+  --panel-fill: rgba(255, 255, 255, 0.58);
+  --outline-hover: rgba(63, 70, 214, 0.08);
+  --outline-border-hover: rgba(63, 70, 214, 0.32);
+  --upload-shadow:
+    0 18px 50px rgb(59 78 120 / 0.18),
+    inset 0 0 18px rgb(255 255 255 / 0.52),
+    0 0 0 1px rgb(255 255 255 / 0.6),
+    0 0 20px rgb(79 70 229 / 0.18),
+    0 0 8px rgb(79 209 197 / 0.14);
+
   --shadow-sm:
-    0 8px 32px rgb(0 0 0 / 0.22),
-    inset 0 0 20px rgb(255 255 255 / 0.04);
+    0 10px 30px rgb(59 78 120 / 0.12),
+    inset 0 0 20px rgb(255 255 255 / 0.36);
   --shadow-md:
-    0 14px 36px rgb(0 0 0 / 0.28),
-    inset 0 0 20px rgb(255 255 255 / 0.04);
+    0 16px 40px rgb(59 78 120 / 0.16),
+    inset 0 0 20px rgb(255 255 255 / 0.4);
   --shadow-lg:
-    0 24px 60px rgb(0 0 0 / 0.4),
-    inset 0 0 24px rgb(255 255 255 / 0.05);
+    0 24px 60px rgb(59 78 120 / 0.2),
+    inset 0 0 24px rgb(255 255 255 / 0.44);
 }

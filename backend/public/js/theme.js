@@ -3,20 +3,21 @@ export function initTheme() {
   const moonIcon = document.getElementById('moonIcon');
   const sunIcon = document.getElementById('sunIcon');
   
-  // Initialize UI based on what was set in HTML block
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  updateIcons(isDark);
+  const initialTheme = document.documentElement.getAttribute('data-theme') || localStorage.getItem('theme') || 'dark';
+  applyTheme(initialTheme);
 
   themeToggle.addEventListener('click', () => {
     const currentTheme = document.documentElement.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     
-    document.documentElement.setAttribute('data-theme', newTheme);
+    applyTheme(newTheme);
     localStorage.setItem('theme', newTheme);
-    updateIcons(newTheme === 'dark');
   });
 
-  function updateIcons(isDark) {
+  function applyTheme(theme) {
+    const isDark = theme === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+
     if (isDark) {
       moonIcon.style.display = 'none';
       sunIcon.style.display = 'block';
@@ -26,12 +27,4 @@ export function initTheme() {
     }
   }
 
-  // Listen for system changes if user hasn't forced one
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (!localStorage.getItem('theme')) {
-      const newTheme = e.matches ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      updateIcons(e.matches);
-    }
-  });
 }
