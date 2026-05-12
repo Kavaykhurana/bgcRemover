@@ -5,7 +5,9 @@ import { MissingApiKeyError, ProcessingError } from '../../utils/errors.js';
 import logger from '../../utils/logger.js';
 
 export async function removeBackground(inputBuffer, userApiKey = null) {
-  const activeKey = userApiKey || config.REMOVEBG_API_KEY;
+  const trimmedUserKey = typeof userApiKey === 'string' ? userApiKey.trim() : '';
+  const serverKey = process.env.VERCEL ? '' : config.REMOVEBG_API_KEY;
+  const activeKey = trimmedUserKey || serverKey;
   if (!activeKey) {
     throw new MissingApiKeyError();
   }

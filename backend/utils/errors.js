@@ -16,7 +16,7 @@ export class ValidationError extends AppError {
 }
 
 export class MissingApiKeyError extends AppError {
-  constructor(message = 'A remove.bg API key is required for this deployment.') {
+  constructor(message = 'Enter your own remove.bg API key to process images on this deployment.') {
     super(message, 400, 'MISSING_API_KEY');
   }
 }

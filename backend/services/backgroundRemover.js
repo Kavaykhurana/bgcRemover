@@ -15,7 +15,7 @@ export async function processBackgroundRemoval(buffer, requestedProvider = 'auto
     activeProvider = 'removebg';
   }
 
-  const remoteKeyAvailable = Boolean(userApiKey || config.REMOVEBG_API_KEY);
+  const remoteKeyAvailable = Boolean(userApiKey || (!process.env.VERCEL && config.REMOVEBG_API_KEY));
 
   const startTime = performance.now();
   let resultBuffer = null;
